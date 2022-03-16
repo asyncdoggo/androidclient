@@ -148,20 +148,9 @@ public class ChatroomActivity extends AppCompatActivity{
                                         e.printStackTrace();
                                     }
                                     ChatroomActivity.this.runOnUiThread(() -> {
-                                        while (true) {
-                                            try {
-                                                Integer i = 1;
-                                                messagearr.add(new Message("", "Defuser"));
-                                                System.out.println(i);
-                                                i+=1;
-                                                if(i==2){
-                                                    break;
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                        populatemesssages(messagearr);
+                                        //TODO
+                                        System.out.println("None");
+                                        //populatemesssages(messagearr);
                                     });
 
 

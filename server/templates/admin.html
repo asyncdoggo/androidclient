@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin panel</title>
+</head>
+<body>
+<div class="container">
+        <h3>Admin</h3>
+
+        <div class="message">
+          {{text | safe}}
+          {{users | safe}}
+          {{errortext | safe}}
+        </div>
+        <div class="input">
+            <h4>Add user to database</h4>
+        <form action="{{url_for('insert')}}" method="POST" enctype="multipart/form-data">
+            <input type="text" placeholder="first name" name="name" required> <br>
+             <input type="text" placeholder="last name" name="lname" required> <br>
+             <input type="text" placeholder="username" name="username" required> <br>
+             <input type="text" placeholder="password" name="password" required> <br>
+         <button type="submit"> Submit </button>
+        </form>
+        </div>
+
+        <div class="logout">
+            <h4>Logout a user from server</h4>
+        <form action="{{url_for('logout_user')}}" method="POST" enctype="multipart/form-data">
+             <input type="text" placeholder="username" name="username" required> <br>
+         <button type="submit"> Submit </button>
+        </form>
+        </div>
+
+
+</div>
+</body>
+</html>
