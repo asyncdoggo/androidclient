@@ -38,30 +38,30 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void registeronclick(View v){
-
+        EditText emailView = findViewById(R.id.email);
         EditText usernameView = findViewById(R.id.username);
-        EditText firstNameView = findViewById(R.id.firstName);
-        EditText lastNameView = findViewById(R.id.lastName);
         EditText passwordView = findViewById(R.id.password);
+        EditText password2view = findViewById(R.id.password2);
 
+        String email = emailView.getText().toString().trim();
         String username = usernameView.getText().toString().trim();
-        String firstName = firstNameView.getText().toString().trim();
-        String lastName = lastNameView.getText().toString().trim();
         String password = passwordView.getText().toString().trim();
+        String password2 = password2view.getText().toString().trim();
 
-        if (firstName.length() == 0 || lastName.length() == 0 || username.length() == 0 || password.length() == 0) {
+        if ( (username.length() == 0 || password.length() == 0 || password2.length() == 0) && !(password2.equals(password)) ) {
             Toast.makeText(getApplicationContext(), "Something is wrong. Please check your inputs.", Toast.LENGTH_LONG).show();
-        } else {
+        }
+        else {
             JSONObject registrationForm = new JSONObject();
             try {
                 registrationForm.put("subject", "register");
-                registrationForm.put("firstname", firstName);
-                registrationForm.put("lastname", lastName);
-                registrationForm.put("username", username);
-                registrationForm.put("password", password);
+                registrationForm.put("email",email);
+                registrationForm.put("uname", username);
+                registrationForm.put("passwd1", password);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
 
             RequestBody body = RequestBody.create(registrationForm.toString(),MediaType.parse("application/json; charset=utf-8"));
 
@@ -74,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void postRequest(String postUrl, RequestBody postBody) {
@@ -103,18 +104,28 @@ public class RegisterActivity extends AppCompatActivity {
                 final TextView responseTextRegister = findViewById(R.id.responseTextRegister);
                 try {
                     final String responseString = response.body().string().trim();
+                    JSONObject resp = new JSONObject(responseString);
+                    String r = resp.getString("status");
                     runOnUiThread(() -> {
-                        if (responseString.equals("success")) {
-                            responseTextRegister.setText("Registration completed successfully.");
-                            Intent intent = new Intent(getApplicationContext() , MainActivity.class);
-                            intent.putExtra(RESULT,"registration successful");
-                            startActivity(intent);
-                        } else if (responseString.equals("username")) {
-                            responseTextRegister.setText("Username already exists. Please chose another username.");
-                        } else {
-                            responseTextRegister.setText("Something went wrong. Please try again later.");
+                        switch (r) {
+                            case "success":
+                                responseTextRegister.setText("Registration completed successfully.");
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra(RESULT, "registration successful");
+                                startActivity(intent);
+                                break;
+                            case "alreadyuser":
+                                responseTextRegister.setText("Username already exists. Please chose another username.");
+                                break;
+                            case "alreadyemail":
+                                responseTextRegister.setText("Email already exists. Please chose another Email.");
+                                break;
+                            default:
+                                responseTextRegister.setText(r);
+                                break;
                         }
                     });
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

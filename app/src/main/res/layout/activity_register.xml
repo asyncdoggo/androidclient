@@ -9,25 +9,14 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-
         <EditText
-            android:id="@+id/firstName"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            android:hint="First Name"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/lastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            android:hint="Last Name"
-            android:singleLine="true"
-            android:textStyle="bold" />
-
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
@@ -45,6 +34,16 @@
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/password2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Reenter Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
 
         <Button
             android:id="@+id/registerButton"

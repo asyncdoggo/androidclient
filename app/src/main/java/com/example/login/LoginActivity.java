@@ -24,8 +24,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String key = "com.example.login.key";
-
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +36,14 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void submit(View v) {
         EditText usernameView = findViewById(R.id.loginUsername);
         EditText passwordView = findViewById(R.id.loginPassword);
 
-        String username = usernameView.getText().toString().trim();
+        username = usernameView.getText().toString().trim();
         String password = passwordView.getText().toString().trim();
 
         if (username.length() == 0 || password.length() == 0) {
@@ -54,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         JSONObject loginForm = new JSONObject();
         try {
             loginForm.put("subject", "login");
-            loginForm.put("username", username);
-            loginForm.put("password", password);
+            loginForm.put("uname", username);
+            loginForm.put("passwd", password);
             
         } catch (JSONException e) {
             e.printStackTrace();
@@ -97,17 +97,25 @@ public class LoginActivity extends AppCompatActivity {
                     TextView responseTextLogin = findViewById(R.id.responseTextLogin);
                     try {
                         String loginResponseString = response.body().string().trim();
-                        Log.d("LOGIN", "Response from the server : " + loginResponseString);
-                        if (loginResponseString.contains("success")) {
-                            Log.d("LOGIN", "Successful Login");
-                            Intent intent = new Intent(getApplicationContext(),ChatroomActivity.class);
-                            intent.putExtra(key,loginResponseString);
-                            startActivity(intent);
-                        } else if (loginResponseString.equals("failure")) {
-                            responseTextLogin.setText("Login Failed. Invalid username or password.");
-                        }
-                        else if (loginResponseString.equals("already")) {
-                            responseTextLogin.setText("user already logged in");
+                        JSONObject resp = new JSONObject(loginResponseString);
+                        String r = resp.getString("status");
+
+                        switch (r) {
+                            case "success":
+                                String key = resp.getString("key");
+                                Intent intent = new Intent(getApplicationContext(), InterfaceActivity.class);
+                                intent.putExtra("key",key);
+                                intent.putExtra("uname",username);
+                                startActivity(intent);
+                                break;
+                            case "nouser":
+                                responseTextLogin.setText("The username does not exists");
+                                break;
+                            case "badpasswd":
+                                responseTextLogin.setText("Wrong password");
+                                break;
+                            default:
+                                responseTextLogin.setText("Unknown Error, try again");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

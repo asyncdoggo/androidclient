@@ -37,12 +37,14 @@ public class ChatroomActivity extends AppCompatActivity{
     Button logout;
     Button sendmessage;
     String authkey;
+    String fromuser;
+    String touser;
     ListView message;
     EditText messagetext;
     Thread updatechat;
+    int count;
+    int prev = 0;
     private long backPressedTime=0;
-    JSONObject obj;
-
     ArrayList<Message> messagearr = new ArrayList<Message>();
 
 
@@ -55,21 +57,20 @@ public class ChatroomActivity extends AppCompatActivity{
         sendmessage = findViewById(R.id.sendmessage);
         messagetext = findViewById(R.id.mytext);
         Intent i = getIntent();
-        String key = i.getStringExtra(LoginActivity.key);
-        authkey = key.substring(8);
-        String path = getFilesDir() + "/authkey";
-        Writekey.write(path, authkey);
+        authkey = i.getStringExtra("key");
+        fromuser = i.getStringExtra("fromuser");
+        touser = i.getStringExtra("touser");
 
         updatechat = new Thread(this::getRequest);
         updatechat.start();
     }
-
+    //TODO: Sending message
     public void sendmessageonclick(View v){
         String messagedata = messagetext.getText().toString();
         messagetext.setText("");
         JSONObject loginForm = new JSONObject();
         try {
-            loginForm.put("subject", "sendmessage");
+            loginForm.put("subject", "sendmsg");
             loginForm.put("key", authkey);
             loginForm.put("message",messagedata);
         } catch (JSONException e) {
@@ -101,6 +102,7 @@ public class ChatroomActivity extends AppCompatActivity{
         JSONObject loginForm = new JSONObject();
         try {
             loginForm.put("subject", "logout");
+            loginForm.put("uname",fromuser);
             loginForm.put("key", authkey);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,7 +116,10 @@ public class ChatroomActivity extends AppCompatActivity{
     public void getRequest(){
         JSONObject getchat = new JSONObject();
         try {
-            getchat.put("subject", "getchat");
+            getchat.put("subject", "getmsg");
+            getchat.put("fromuser",fromuser);
+            getchat.put("touser",touser);
+            getchat.put("key",authkey);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -128,7 +133,7 @@ public class ChatroomActivity extends AppCompatActivity{
 
         while (true) {
             if (!Thread.interrupted()) {
-                sleep(500);
+                sleep(2000);
                 try {
                     client.newCall(request).enqueue(new Callback() {
                         @Override
@@ -140,22 +145,36 @@ public class ChatroomActivity extends AppCompatActivity{
                         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                             if (response.isSuccessful()) {
 
-                                String myresponse = response.body().string();
+                                String myresponse = response.body().string().trim();
+                                JSONArray messages = null;
+                                JSONArray users = null;
+                                JSONObject obj;
                                 try {
                                     obj = new JSONObject(myresponse);
+                                    messages = obj.getJSONArray("messages");
+                                    users = obj.getJSONArray("user");
+                                    count = messages.length();
                                 }
-                                catch (JSONException e) {
+                                catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+                                if(count > prev) {
+                                    try {
+                                        for (int i = 0; i < messages.length(); i++) {
+                                            Message msg = new Message(messages.getString(i), users.getString(i));
+                                            messagearr.add(msg);
+                                        }
+                                        ChatroomActivity.this.runOnUiThread(() -> {
+                                            populatemesssages(messagearr);
+                                        });
+                                        prev = count;
+                                    }
+                                    catch (JSONException e){
                                         e.printStackTrace();
                                     }
-                                    ChatroomActivity.this.runOnUiThread(() -> {
-                                        //TODO
-                                        System.out.println("None");
-                                        //populatemesssages(messagearr);
-                                    });
-
-
+                                }
                             }
-                        }
+                            }
 
                     });
                 }
@@ -168,8 +187,6 @@ public class ChatroomActivity extends AppCompatActivity{
             }
         }
     }
-
-
 
     public void postRequest(String postUrl, RequestBody postBody) {
         OkHttpClient client = new OkHttpClient();
@@ -186,10 +203,13 @@ public class ChatroomActivity extends AppCompatActivity{
             public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try {
                     final String responseString = response.body().string().trim();
+                    JSONObject obj = new JSONObject(responseString);
+                    String r = obj.getString("status");
                     runOnUiThread(() -> {
-                        if (responseString.equals("logout")) {
+                        if (r.equals("logout")) {
                             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     });
                 } catch (Exception e) {

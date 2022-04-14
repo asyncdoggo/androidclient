@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     public Context mainActivityContext;
     private long backPressedTime = 0;
 
-    static String postUrl = "http://192.168.29.79:5000";//10.0.2.2
+    static String postUrl = "http://192.168.29.114:5005";//10.0.2.2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,22 +75,19 @@ public class MainActivity extends AppCompatActivity implements Runnable{
             Toast.makeText(this, "Press back again to Exit", Toast.LENGTH_SHORT).show();
         }
         else {
-            int pid = android.os.Process.myPid();
-            android.os.Process.killProcess(pid);
-            //finishAndRemoveTask();
+            android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
 
     @Override
     public void run() {
         while(true) {
-            TextView responseText = findViewById(R.id.responseText);
+            TextView responsetext = findViewById(R.id.responseText);
             if (network.status.equals("connected")) {
-                responseText.setText("connected");
+                responsetext.setText("connected");
                 break;
             }
             else{
-                TextView responsetext = findViewById(R.id.responseText);
                 responsetext.setText("not connected");
             }
         }
