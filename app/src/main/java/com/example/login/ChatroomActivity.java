@@ -68,15 +68,17 @@ public class ChatroomActivity extends AppCompatActivity{
     public void sendmessageonclick(View v){
         String messagedata = messagetext.getText().toString();
         messagetext.setText("");
-        JSONObject loginForm = new JSONObject();
+        JSONObject sendform = new JSONObject();
         try {
-            loginForm.put("subject", "sendmsg");
-            loginForm.put("key", authkey);
-            loginForm.put("message",messagedata);
+            sendform.put("subject", "sendmsg");
+            sendform.put("key", authkey);
+            sendform.put("fromuser",fromuser);
+            sendform.put("touser",touser);
+            sendform.put("message",messagedata);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(loginForm.toString(), MediaType.parse("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(sendform.toString(), MediaType.parse("application/json; charset=utf-8"));
         postRequest(MainActivity.postUrl, body);
 
     }
@@ -99,15 +101,15 @@ public class ChatroomActivity extends AppCompatActivity{
 
     public void logoutmethod(View v) {
         updatechat.interrupt();
-        JSONObject loginForm = new JSONObject();
+        JSONObject logoutform = new JSONObject();
         try {
-            loginForm.put("subject", "logout");
-            loginForm.put("uname",fromuser);
-            loginForm.put("key", authkey);
+            logoutform.put("subject", "logout");
+            logoutform.put("uname",fromuser);
+            logoutform.put("key", authkey);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(loginForm.toString(), MediaType.parse("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(logoutform.toString(), MediaType.parse("application/json; charset=utf-8"));
         postRequest(MainActivity.postUrl, body);
     }
 
@@ -160,6 +162,7 @@ public class ChatroomActivity extends AppCompatActivity{
                                 }
                                 if(count > prev) {
                                     try {
+                                        messagearr.clear();
                                         for (int i = 0; i < messages.length(); i++) {
                                             Message msg = new Message(messages.getString(i), users.getString(i));
                                             messagearr.add(msg);
@@ -227,11 +230,9 @@ public class ChatroomActivity extends AppCompatActivity{
     }
 
     private void populatemesssages(ArrayList<Message> arr) {
-        // Construct the data source
-        // Create the adapter to convert the array to views
         UserAdapter adapter = new UserAdapter(this, arr);
-        // Attach the adapter to a ListView
         message.setAdapter(adapter);
+        message.setSelection(message.getCount() - 1);
     }
 
 

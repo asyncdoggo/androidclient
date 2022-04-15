@@ -26,12 +26,8 @@ public class network extends Thread{
             else{
                 status = "not";
             }
-            // You can determine on HTTP return code received. 200 is success.
 
         } catch (IOException e) {
-
-            // TODO Auto-generated catch block
-
             e.printStackTrace();
         }
         }
