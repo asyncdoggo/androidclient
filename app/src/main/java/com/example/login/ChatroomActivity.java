@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -210,7 +208,7 @@ public class ChatroomActivity extends AppCompatActivity{
                     String r = obj.getString("status");
                     runOnUiThread(() -> {
                         if (r.equals("logout")) {
-                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();
                         }

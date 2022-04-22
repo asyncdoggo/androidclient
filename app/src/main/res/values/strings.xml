@@ -3,6 +3,7 @@
     <string name="send">send</string>
     <string name="write_a_message">Write a message</string>
     <string name="login">Login</string>
+    <string name="reset">Reset</string>
     <string name="title_activity_interface">interfaceActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

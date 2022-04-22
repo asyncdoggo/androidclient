@@ -17,16 +17,20 @@
         <activity
             android:name=".InterfaceActivity"
             android:exported="false" />
-        <activity
-            android:name=".interfaceActivity"
-            android:exported="false"
-            android:label="@string/title_activity_interface"
-            android:theme="@style/Theme.Login.NoActionBar" />
-        <activity android:name=".LoginSuccessActivity" />
         <activity android:name=".ChatroomActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity"/>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity">
+        <!--
+        <activity android:name=".TBEDELETED">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        -->
+        <activity android:name=".DebugModeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
