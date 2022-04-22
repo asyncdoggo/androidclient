@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Writekey {
-    public static void write(String path,String authkey) {
+    public static void write(String path, String authkey) {
 
         File file = new File(path);
         try {

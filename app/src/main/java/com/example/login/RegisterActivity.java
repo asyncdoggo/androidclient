@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public void registeronclick(View v){
+    public void registeronclick(View v) {
         EditText emailView = findViewById(R.id.email);
         EditText usernameView = findViewById(R.id.username);
         EditText passwordView = findViewById(R.id.password);
@@ -48,14 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordView.getText().toString().trim();
         String password2 = password2view.getText().toString().trim();
 
-        if ( (username.length() == 0 || password.length() == 0 || password2.length() == 0) && !(password2.equals(password)) ) {
+        if ((username.length() == 0 || password.length() == 0 || password2.length() == 0) && !(password2.equals(password))) {
             Toast.makeText(getApplicationContext(), "Something is wrong. Please check your inputs.", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             JSONObject registrationForm = new JSONObject();
             try {
                 registrationForm.put("subject", "register");
-                registrationForm.put("email",email);
+                registrationForm.put("email", email);
                 registrationForm.put("uname", username);
                 registrationForm.put("passwd1", password);
             } catch (JSONException e) {
@@ -63,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
 
-            RequestBody body = RequestBody.create(registrationForm.toString(),MediaType.parse("application/json; charset=utf-8"));
+            RequestBody body = RequestBody.create(registrationForm.toString(), MediaType.parse("application/json; charset=utf-8"));
 
             postRequest(MainActivity.postUrl, body);
         }
@@ -71,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();

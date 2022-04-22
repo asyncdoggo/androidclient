@@ -1,5 +1,4 @@
 package com.example.login;
-import java.util.ArrayList;
 
 public class Message {
 
@@ -7,7 +6,7 @@ public class Message {
     private String message;
     private String uname;
 
-    public Message(String message,String username) {
+    public Message(String message, String username) {
         this.message = message;
         this.uname = username;
     }
@@ -16,10 +15,11 @@ public class Message {
         return uname;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
-    public void setMessage(String message){
+
+    public void setMessage(String message) {
         this.message = message;
     }
 }

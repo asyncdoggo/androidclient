@@ -1,7 +1,5 @@
 package com.example.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -33,7 +33,7 @@ public class InterfaceActivity extends AppCompatActivity {
     String uname;
     String touser;
     ListView users;
-    private long backPressedTime=0;
+    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class InterfaceActivity extends AppCompatActivity {
             try {
                 loginForm.put("subject", "getusers");
                 loginForm.put("key", authkey);
-                loginForm.put("uname",uname);
+                loginForm.put("uname", uname);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -65,7 +65,7 @@ public class InterfaceActivity extends AppCompatActivity {
         JSONObject loginForm = new JSONObject();
         try {
             loginForm.put("subject", "logout");
-            loginForm.put("uname",uname);
+            loginForm.put("uname", uname);
             loginForm.put("key", authkey);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -91,11 +91,10 @@ public class InterfaceActivity extends AppCompatActivity {
                     final String responseString = response.body().string().trim();
                     JSONObject obj = new JSONObject(responseString);
                     String r;
-                    try{
+                    try {
                         r = obj.getString("status");
-                    }
-                    catch(JSONException ignored){
-                        r  = "";
+                    } catch (JSONException ignored) {
+                        r = "";
                     }
 
                     String finalR = r;
@@ -103,21 +102,19 @@ public class InterfaceActivity extends AppCompatActivity {
                         if (finalR.equals("logout")) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
-                        }
-                        else if(finalR.equals("success")){
-                            Intent intent = new Intent(getApplicationContext(),ChatroomActivity.class);
-                            intent.putExtra("key",authkey);
-                            intent.putExtra("touser",touser);
-                            intent.putExtra("fromuser",uname);
+                        } else if (finalR.equals("success")) {
+                            Intent intent = new Intent(getApplicationContext(), ChatroomActivity.class);
+                            intent.putExtra("key", authkey);
+                            intent.putExtra("touser", touser);
+                            intent.putExtra("fromuser", uname);
                             startActivity(intent);
-                        }
-                        else{
+                        } else {
 
                             Iterator<String> keys = obj.keys();
                             ArrayList<String> k = new ArrayList<>();
 
-                            while (keys.hasNext()){
-                                String key = (String)keys.next();
+                            while (keys.hasNext()) {
+                                String key = (String) keys.next();
                                 String val = null;
                                 try {
                                     val = obj.getString(key);
@@ -127,7 +124,7 @@ public class InterfaceActivity extends AppCompatActivity {
                                 k.add(val);
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(InterfaceActivity.this, android.R.layout.simple_list_item_1,k);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(InterfaceActivity.this, android.R.layout.simple_list_item_1, k);
                             users.setAdapter(adapter);
                             users.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
@@ -138,9 +135,9 @@ public class InterfaceActivity extends AppCompatActivity {
                                     JSONObject chat = new JSONObject();
                                     try {
                                         chat.put("subject", "chat");
-                                        chat.put("from",uname);
+                                        chat.put("from", uname);
                                         chat.put("key", authkey);
-                                        chat.put("to",touser);
+                                        chat.put("to", touser);
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -159,7 +156,8 @@ public class InterfaceActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 // Cancel the post on failure.
-                call.cancel(); }
+                call.cancel();
+            }
         });
     }
 
@@ -170,8 +168,7 @@ public class InterfaceActivity extends AppCompatActivity {
         if (t - backPressedTime > 2000) {    // 2 secs
             backPressedTime = t;
             Toast.makeText(this, "Press back again to logout", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             logout(new View(this));
         }
     }

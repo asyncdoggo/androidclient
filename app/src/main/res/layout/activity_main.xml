@@ -64,7 +64,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#D7E2B8"
                     android:text="@string/reset"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </GridLayout>
 
 

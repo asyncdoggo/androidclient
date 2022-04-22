@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,14 +29,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements Runnable{
+public class MainActivity extends AppCompatActivity implements Runnable {
+    static String postUrl = "";// server url
+    public Context mainActivityContext;
     String username;
     Button register;
     TextView responsetext;
-    public Context mainActivityContext;
     private long backPressedTime = 0;
-
-    static String postUrl = "";// server url
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         if (result == null) {
             Thread t1 = new Thread(this);
             t1.start();
-        }
-        else
-        {
+        } else {
             TextView responseText = findViewById(R.id.responseText);
             responseText.setText(result);
         }
@@ -95,16 +91,15 @@ public class MainActivity extends AppCompatActivity implements Runnable{
             loginForm.put("subject", "login");
             loginForm.put("uname", username);
             loginForm.put("passwd", password);
-            
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        RequestBody body = RequestBody.create(loginForm.toString(),MediaType.parse("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(loginForm.toString(), MediaType.parse("application/json; charset=utf-8"));
 
         postRequest(MainActivity.postUrl, body);
     }
-
 
 
     public void postRequest(String postUrl, RequestBody postBody) {
@@ -133,14 +128,14 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                    TextView responseText = findViewById(R.id.responseText);
-                    try {
-                        String loginResponseString = new String(response.body().bytes());
+                TextView responseText = findViewById(R.id.responseText);
+                try {
+                    String loginResponseString = new String(response.body().bytes());
 
-                        JSONObject resp = new JSONObject(loginResponseString);
-                        String r = resp.getString("status");
-                        // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
-                        runOnUiThread(() -> {
+                    JSONObject resp = new JSONObject(loginResponseString);
+                    String r = resp.getString("status");
+                    // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
+                    runOnUiThread(() -> {
 
                         switch (r) {
                             case "success":
@@ -151,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
                                     intent.putExtra("uname", username);
                                     startActivity(intent);
                                     break;
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     break;
                                 }
                             case "nouser":
@@ -164,10 +159,10 @@ public class MainActivity extends AppCompatActivity implements Runnable{
                                 responseText.setText("Unknown Error, try again");
                         }
                     });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        responseText.setText("Something went wrong. Please try again later.");
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    responseText.setText("Something went wrong. Please try again later.");
+                }
 
             }
 
@@ -186,10 +181,9 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
             int code = connection.getResponseCode();
 
-            if (code == 200){
+            if (code == 200) {
                 responseText.setText("Connected");
-            }
-            else{
+            } else {
                 responseText.setText("Can't connect to server");
             }
 

@@ -31,7 +31,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class ChatroomActivity extends AppCompatActivity{
+public class ChatroomActivity extends AppCompatActivity {
     Button logout;
     Button sendmessage;
     String authkey;
@@ -42,9 +42,8 @@ public class ChatroomActivity extends AppCompatActivity{
     Thread updatechat;
     int count;
     int prev = 0;
-    private long backPressedTime=0;
     ArrayList<Message> messagearr = new ArrayList<Message>();
-
+    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +61,18 @@ public class ChatroomActivity extends AppCompatActivity{
         updatechat = new Thread(this::getRequest);
         updatechat.start();
     }
+
     //TODO: Sending message
-    public void sendmessageonclick(View v){
+    public void sendmessageonclick(View v) {
         String messagedata = messagetext.getText().toString();
         messagetext.setText("");
         JSONObject sendform = new JSONObject();
         try {
             sendform.put("subject", "sendmsg");
             sendform.put("key", authkey);
-            sendform.put("fromuser",fromuser);
-            sendform.put("touser",touser);
-            sendform.put("message",messagedata);
+            sendform.put("fromuser", fromuser);
+            sendform.put("touser", touser);
+            sendform.put("message", messagedata);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -82,19 +82,17 @@ public class ChatroomActivity extends AppCompatActivity{
     }
 
 
-    
-        @Override
-        public void onBackPressed() {
-            long t = System.currentTimeMillis();
+    @Override
+    public void onBackPressed() {
+        long t = System.currentTimeMillis();
 
-            if (t - backPressedTime > 2000) {    // 2 secs
-                backPressedTime = t;
-                Toast.makeText(this, "Press back again to logout", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                logoutmethod(null);
-            }
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Press back again to logout", Toast.LENGTH_SHORT).show();
+        } else {
+            logoutmethod(null);
         }
+    }
 
 
     public void logoutmethod(View v) {
@@ -102,7 +100,7 @@ public class ChatroomActivity extends AppCompatActivity{
         JSONObject logoutform = new JSONObject();
         try {
             logoutform.put("subject", "logout");
-            logoutform.put("uname",fromuser);
+            logoutform.put("uname", fromuser);
             logoutform.put("key", authkey);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -112,14 +110,13 @@ public class ChatroomActivity extends AppCompatActivity{
     }
 
 
-
-    public void getRequest(){
+    public void getRequest() {
         JSONObject getchat = new JSONObject();
         try {
             getchat.put("subject", "getmsg");
-            getchat.put("fromuser",fromuser);
-            getchat.put("touser",touser);
-            getchat.put("key",authkey);
+            getchat.put("fromuser", fromuser);
+            getchat.put("touser", touser);
+            getchat.put("key", authkey);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -154,11 +151,10 @@ public class ChatroomActivity extends AppCompatActivity{
                                     messages = obj.getJSONArray("messages");
                                     users = obj.getJSONArray("user");
                                     count = messages.length();
-                                }
-                                catch (JSONException e){
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                if(count > prev) {
+                                if (count > prev) {
                                     try {
                                         messagearr.clear();
                                         for (int i = 0; i < messages.length(); i++) {
@@ -169,21 +165,18 @@ public class ChatroomActivity extends AppCompatActivity{
                                             populatemesssages(messagearr);
                                         });
                                         prev = count;
-                                    }
-                                    catch (JSONException e){
+                                    } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
                             }
-                            }
+                        }
 
                     });
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     break;
                 }
-            }
-            else{
+            } else {
                 break;
             }
         }
