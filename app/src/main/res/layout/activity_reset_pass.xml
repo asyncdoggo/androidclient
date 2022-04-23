@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/uname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            android:hint="Username"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/oldpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Old Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/newpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/newpass2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Reenter Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D7E2B8"
+            android:onClick="reset"
+            android:text="reset"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/responsereset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

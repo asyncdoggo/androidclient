@@ -83,7 +83,7 @@ public class ChatroomActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this,InterfaceActivity.class);
+        Intent intent = new Intent(getApplicationContext(),InterfaceActivity.class);
         intent.putExtra("key", authkey);
         intent.putExtra("uname", fromuser);
         startActivity(intent);

@@ -15,10 +15,13 @@
         android:theme="@style/Theme.Login"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ResetPassActivity"
+            android:exported="false" />
+        <activity
             android:name=".InterfaceActivity"
             android:exported="false" />
         <activity android:name=".ChatroomActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <!--
         <activity android:name=".TBEDELETED">
@@ -29,7 +32,8 @@
             </intent-filter>
         </activity>
         -->
-        <activity android:name=".DebugModeActivity"
+        <activity
+            android:name=".DebugModeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

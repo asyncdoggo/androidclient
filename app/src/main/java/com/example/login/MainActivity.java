@@ -36,20 +36,29 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     String username;
     Button register;
     TextView responsetext;
+    Button resetbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        responsetext = findViewById(R.id.responseText);
         setContentView(R.layout.activity_main);
-        path = getFilesDir() + "/authkey";
-
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 0);
         mainActivityContext = this;
+
+
         register = findViewById(R.id.register);
+        responsetext = findViewById(R.id.responseText);
+        resetbutton = findViewById(R.id.resetbutton);
+        path = getFilesDir() + "/authkey";
 
         register.setOnClickListener(v -> {
             Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        resetbutton.setOnClickListener(v->{
+            Intent intent = new Intent(this,ResetPassActivity.class);
             startActivity(intent);
             finish();
         });
@@ -61,17 +70,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             Thread t1 = new Thread(this);
             t1.start();
         } else {
-            TextView responseText = findViewById(R.id.responseText);
-            responseText.setText(result);
+            responsetext.setText(result);
         }
     }
 
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     public void submit(View v) {
@@ -121,14 +127,12 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 runOnUiThread(() -> {
-                    TextView responseText = findViewById(R.id.responseText);
-                    responseText.setText("Failed to Connect to Server. Please Try Again.");
+                    responsetext.setText("Failed to Connect to Server. Please Try Again.");
                 });
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                TextView responseText = findViewById(R.id.responseText);
                 try {
                     String loginResponseString = new String(response.body().bytes());
 
@@ -150,18 +154,18 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                     break;
                                 }
                             case "nouser":
-                                responseText.setText("The username does not exists");
+                                responsetext.setText("The username does not exists");
                                 break;
                             case "badpasswd":
-                                responseText.setText("Wrong password");
+                                responsetext.setText("Wrong password");
                                 break;
                             default:
-                                responseText.setText("Unknown Error, try again");
+                                responsetext.setText("Unknown Error, try again");
                         }
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    responseText.setText("Something went wrong. Please try again later.");
+                    responsetext.setText("Something went wrong. Please try again later.");
                 }
 
             }
@@ -171,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
     public void run() {
         try {
-            TextView responseText = findViewById(R.id.responseText);
             String ul = MainActivity.postUrl;
             URL u = new URL(ul);
 
@@ -182,9 +185,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             int code = connection.getResponseCode();
 
             if (code == 200) {
-                responseText.setText("Connected");
+                responsetext.setText("Connected");
             } else {
-                responseText.setText("Can't connect to server");
+                responsetext.setText("Can't connect to server");
             }
 
         } catch (IOException e) {
