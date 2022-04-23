@@ -31,18 +31,18 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements Runnable {
     static String postUrl = "";// server url
+    String path;
     public Context mainActivityContext;
     String username;
     Button register;
     TextView responsetext;
-    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         responsetext = findViewById(R.id.responseText);
         setContentView(R.layout.activity_main);
-
+        path = getFilesDir() + "/authkey";
 
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 0);
         mainActivityContext = this;

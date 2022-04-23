@@ -43,7 +43,6 @@ public class ChatroomActivity extends AppCompatActivity {
     int count;
     int prev = 0;
     ArrayList<Message> messagearr = new ArrayList<Message>();
-    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +83,10 @@ public class ChatroomActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        long t = System.currentTimeMillis();
-
-        if (t - backPressedTime > 2000) {    // 2 secs
-            backPressedTime = t;
-            Toast.makeText(this, "Press back again to logout", Toast.LENGTH_SHORT).show();
-        } else {
-            logoutmethod(null);
-        }
+        Intent intent = new Intent(this,InterfaceActivity.class);
+        intent.putExtra("key", authkey);
+        intent.putExtra("uname", fromuser);
+        startActivity(intent);
     }
 
 

@@ -3,6 +3,9 @@ package com.example.login;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Writekey {
     public static void write(String path, String authkey) {
@@ -25,5 +28,14 @@ public class Writekey {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static String read(String path){
+        byte[] encoded = new byte[0];
+        try {
+            encoded = Files.readAllBytes(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String(encoded, Charset.defaultCharset());
     }
 }
