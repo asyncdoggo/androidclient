@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="logout"
-            android:text="logout" />
+            android:text="@string/logout" />
     </LinearLayout>
 
     <ListView

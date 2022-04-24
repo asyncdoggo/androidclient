@@ -1,5 +1,6 @@
 package com.example.login;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -93,12 +94,12 @@ public class ResetPassActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     TextView resview = findViewById(R.id.responsereset);
-                    resview.setText("Failed to Connect to Server. Please Try Again.");
+                    resview.setText(R.string.server_fail_connect);
                 });
             }
 
             @Override
-            public void onResponse(Call call, final Response response) {
+            public void onResponse(@NonNull Call call, @NonNull final Response response) {
                 final TextView res = findViewById(R.id.responsereset);
                 try {
                     final String responseString = response.body().string().trim();
@@ -107,13 +108,13 @@ public class ResetPassActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         switch (r) {
                             case "success":
-                                res.setText("Password reset successsful");
+                                res.setText(R.string.pass_reset_success);
                                 break;
                             case "nouser":
-                                res.setText("Username does not exists");
+                                res.setText(R.string.nouser);
                                 break;
                             case "badpass":
-                                res.setText("Existing password is wrong");
+                                res.setText(R.string.badpass);
                                 break;
                             default:
                                 res.setText(r);

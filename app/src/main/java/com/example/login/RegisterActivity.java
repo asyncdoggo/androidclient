@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
@@ -88,18 +89,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 call.cancel();
                 Log.d("FAIL", e.getMessage());
 
                 runOnUiThread(() -> {
                     TextView responseText = findViewById(R.id.responseTextRegister);
-                    responseText.setText("Failed to Connect to Server. Please Try Again.");
+                    responseText.setText(R.string.server_fail_connect);
                 });
             }
 
             @Override
-            public void onResponse(Call call, final Response response) {
+            public void onResponse(@NonNull Call call, @NonNull final Response response) {
                 final TextView responseTextRegister = findViewById(R.id.responseTextRegister);
                 try {
                     final String responseString = response.body().string().trim();
@@ -108,16 +109,16 @@ public class RegisterActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         switch (r) {
                             case "success":
-                                responseTextRegister.setText("Registration completed successfully.");
+                                responseTextRegister.setText(R.string.register_success);
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra(RESULT, "registration successful");
                                 startActivity(intent);
                                 break;
                             case "alreadyuser":
-                                responseTextRegister.setText("Username already exists. Please chose another username.");
+                                responseTextRegister.setText(R.string.alreadyuser);
                                 break;
                             case "alreadyemail":
-                                responseTextRegister.setText("Email already exists. Please chose another Email.");
+                                responseTextRegister.setText(R.string.alreadyemail);
                                 break;
                             default:
                                 responseTextRegister.setText(r);

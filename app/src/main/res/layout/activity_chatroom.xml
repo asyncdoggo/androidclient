@@ -13,6 +13,8 @@
         <EditText
             android:id="@+id/mytext"
             android:layout_width="0dp"
+            android:inputType="textLongMessage"
+            android:hint="@string/enter_message"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
@@ -22,7 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="sendmessageonclick"
-            android:text="send" />
+            android:text="@string/send" />
 
         <Button
             android:id="@+id/logout"
@@ -30,13 +32,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="logoutmethod"
-            android:text="logout" />
+            android:text="@string/logout" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/above"></ListView>
+        android:layout_above="@id/above"/>
 
 </RelativeLayout>

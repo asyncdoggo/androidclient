@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -29,7 +30,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements Runnable {
+public class MainActivity extends AppCompatActivity implements Runnable { //TODO:Use method Writekey.read() in autologin
     static String postUrl = "";// server url
     String path;
     public Context mainActivityContext;
@@ -120,25 +121,20 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                // Cancel the post on failure.
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 call.cancel();
                 Log.d("FAIL", e.getMessage());
 
-                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
-                runOnUiThread(() -> {
-                    responsetext.setText("Failed to Connect to Server. Please Try Again.");
-                });
+                runOnUiThread(() -> responsetext.setText(R.string.server_fail_connect));
             }
 
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull final Response response) {
                 try {
                     String loginResponseString = new String(response.body().bytes());
 
                     JSONObject resp = new JSONObject(loginResponseString);
                     String r = resp.getString("status");
-                    // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                     runOnUiThread(() -> {
 
                         switch (r) {
@@ -154,18 +150,18 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                                     break;
                                 }
                             case "nouser":
-                                responsetext.setText("The username does not exists");
+                                responsetext.setText(R.string.nouser);
                                 break;
                             case "badpasswd":
-                                responsetext.setText("Wrong password");
+                                responsetext.setText(R.string.badpass);
                                 break;
                             default:
-                                responsetext.setText("Unknown Error, try again");
+                                responsetext.setText(R.string.unknown_error);
                         }
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    responsetext.setText("Something went wrong. Please try again later.");
+                    responsetext.setText(R.string.unidentified_error);
                 }
 
             }
@@ -185,9 +181,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             int code = connection.getResponseCode();
 
             if (code == 200) {
-                responsetext.setText("Connected");
+                responsetext.setText(R.string.connected);
             } else {
-                responsetext.setText("Can't connect to server");
+                responsetext.setText(R.string.server_fail_connect);
             }
 
         } catch (IOException e) {

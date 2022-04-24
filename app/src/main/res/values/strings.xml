@@ -4,13 +4,31 @@
     <string name="write_a_message">Write a message</string>
     <string name="login">Login</string>
     <string name="reset">Reset</string>
-    <string name="title_activity_interface">interfaceActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--                                           -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="server_fail_connect">Failed to Connect to Server. Please Try Again.</string>
+    <string name="nouser">The username does not exists</string>
+    <string name="badpass">Wrong password</string>
+    <string name="unknown_error">Unknown Error, try again</string>
+    <string name="unidentified_error">Something went wrong. Please try again later.</string>
+    <string name="connected">Connected</string>
+    <string name="register_success">Registration completed successfully.</string>
+    <string name="alreadyuser">Username already exists. Please chose another username.</string>
+    <string name="alreadyemail">Email already exists. Please chose another Email.</string>
+    <string name="pass_reset_success">Password reset successsful</string>
+    <string name="enter_message">Enter message</string>
+    <string name="logout">logout</string>
+    <string name="enter_uname">Enter Username</string>
+    <string name="enter_pass">Enter Password</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="reenterpass">Reenter Password</string>
+    <string name="oldpass">Old Password</string>
+    <string name="newpass">New Password</string>
 </resources>

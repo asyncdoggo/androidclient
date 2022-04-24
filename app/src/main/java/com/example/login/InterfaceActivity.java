@@ -3,12 +3,12 @@ package com.example.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -124,27 +124,24 @@ public class InterfaceActivity extends AppCompatActivity {
                                 k.add(val);
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(InterfaceActivity.this, android.R.layout.simple_list_item_1, k);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(InterfaceActivity.this, android.R.layout.simple_list_item_1, k);
                             users.setAdapter(adapter);
-                            users.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    touser = (String) parent.getItemAtPosition(position);
+                            users.setOnItemClickListener((parent, view, position, id) -> {
+                                touser = (String) parent.getItemAtPosition(position);
 
 
-                                    JSONObject chat = new JSONObject();
-                                    try {
-                                        chat.put("subject", "chat");
-                                        chat.put("from", uname);
-                                        chat.put("key", authkey);
-                                        chat.put("to", touser);
+                                JSONObject chat = new JSONObject();
+                                try {
+                                    chat.put("subject", "chat");
+                                    chat.put("from", uname);
+                                    chat.put("key", authkey);
+                                    chat.put("to", touser);
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    RequestBody body = RequestBody.create(chat.toString(), MediaType.parse("application/json; charset=utf-8"));
-                                    postRequest(MainActivity.postUrl, body);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
+                                RequestBody body = RequestBody.create(chat.toString(), MediaType.parse("application/json; charset=utf-8"));
+                                postRequest(MainActivity.postUrl, body);
                             });
                         }
                     });
@@ -154,7 +151,7 @@ public class InterfaceActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 // Cancel the post on failure.
                 call.cancel();
             }

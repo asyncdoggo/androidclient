@@ -13,7 +13,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -22,8 +22,9 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            android:hint="Username"
+            android:hint="@string/enter_uname"
             android:singleLine="true"
             android:textStyle="bold" />
 
@@ -31,7 +32,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/enter_pass"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -40,7 +41,7 @@
             android:id="@+id/password2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Reenter Password"
+            android:hint="@string/reenterpass"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:background="#D7E2B8"
             android:onClick="registeronclick"
-            android:text="Register"
+            android:text="@string/register"
             android:textStyle="bold" />
 
         <TextView

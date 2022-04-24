@@ -13,8 +13,9 @@
             android:id="@+id/uname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            android:hint="Username"
+            android:hint="@string/enter_uname"
             android:singleLine="true"
             android:textStyle="bold" />
 
@@ -22,7 +23,7 @@
             android:id="@+id/oldpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Old Password"
+            android:hint="@string/oldpass"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -31,7 +32,7 @@
             android:id="@+id/newpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="New Password"
+            android:hint="@string/newpass"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -40,7 +41,7 @@
             android:id="@+id/newpass2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Reenter Password"
+            android:hint="@string/reenterpass"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:background="#D7E2B8"
             android:onClick="reset"
-            android:text="reset"
+            android:text="@string/reset"
             android:textStyle="bold" />
 
         <TextView
