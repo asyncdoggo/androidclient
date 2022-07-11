@@ -1,10 +1,10 @@
-package com.example.login;
+package com.example.chatapp;
 
 public class Message {
 
+    private final String uname;
     //declare private data instead of public to ensure the privacy of data field of each class
     private String message;
-    private String uname;
 
     public Message(String message, String username) {
         this.message = message;

@@ -1,7 +1,4 @@
-package com.example.login;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.chatapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,19 +49,19 @@ public class ResetPassActivity extends AppCompatActivity {
         finish();
     }
 
-    public void reset(View view){
+    public void reset(View view) {
         String uname = unameview.getText().toString().trim();
         String oldpass = oldpassview.getText().toString().trim();
         String newpass = newpassview.getText().toString().trim();
         String newpass2 = newpass2view.getText().toString().trim();
 
-        if(newpass.equals(newpass2)){
+        if (newpass.equals(newpass2)) {
             JSONObject resetform = new JSONObject();
             try {
                 resetform.put("subject", "resetpass");
-                resetform.put("uname",uname);
+                resetform.put("uname", uname);
                 resetform.put("oldpass", oldpass);
-                resetform.put("newpass",newpass);
+                resetform.put("newpass", newpass);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -70,9 +70,8 @@ public class ResetPassActivity extends AppCompatActivity {
             RequestBody body = RequestBody.create(resetform.toString(), MediaType.parse("application/json; charset=utf-8"));
 
             postRequest(MainActivity.postUrl, body);
-        }
-        else{
-            resview.setText("Passwords should match");
+        } else {
+            resview.setText(R.string.passwords_match);
         }
     }
 

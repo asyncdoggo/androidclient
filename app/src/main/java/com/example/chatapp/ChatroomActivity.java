@@ -1,5 +1,7 @@
-package com.example.login;
+package com.example.chatapp;
+
 import static android.os.SystemClock.sleep;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,14 +9,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -53,7 +59,6 @@ public class ChatroomActivity extends AppCompatActivity {
         updatechat.start();
     }
 
-    //TODO: Sending message
     public void sendmessageonclick(View v) {
         String messagedata = messagetext.getText().toString();
         messagetext.setText("");
@@ -75,7 +80,7 @@ public class ChatroomActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(),InterfaceActivity.class);
+        Intent intent = new Intent(getApplicationContext(), InterfaceActivity.class);
         intent.putExtra("key", authkey);
         intent.putExtra("uname", fromuser);
         startActivity(intent);
@@ -126,7 +131,7 @@ public class ChatroomActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
+                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                             if (response.isSuccessful()) {
 
                                 String myresponse = response.body().string().trim();

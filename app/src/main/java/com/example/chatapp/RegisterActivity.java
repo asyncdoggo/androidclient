@@ -1,4 +1,4 @@
-package com.example.login;
+package com.example.chatapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String RESULT = "com.example.login.result";
+    public static final String RESULT = "com.example.chatapp.result";
     Button register;
 
     @Override

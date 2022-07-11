@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.login">
+    package="com.example.chatapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,25 +15,16 @@
         android:theme="@style/Theme.Login"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ResetPassActivity"
+            android:name="com.example.chatapp.ResetPassActivity"
             android:exported="false" />
         <activity
-            android:name=".InterfaceActivity"
+            android:name="com.example.chatapp.InterfaceActivity"
             android:exported="false" />
-        <activity android:name=".ChatroomActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity" />
-        <!--
-        <activity android:name=".TBEDELETED">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
+        <activity android:name="com.example.chatapp.ChatroomActivity" />
+        <activity android:name="com.example.chatapp.MainActivity" />
+        <activity android:name="com.example.chatapp.RegisterActivity" />
         <activity
-            android:name=".DebugModeActivity"
+            android:name="com.example.chatapp.DebugModeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
