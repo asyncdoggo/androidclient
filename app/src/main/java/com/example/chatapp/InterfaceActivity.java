@@ -1,6 +1,8 @@
-package com.example.login;
+package com.example.chatapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -44,8 +46,12 @@ public class InterfaceActivity extends AppCompatActivity {
         Intent i = getIntent();
         authkey = i.getStringExtra("key");
         uname = i.getStringExtra("uname");
-        String path = getFilesDir() + "/authkey";
-        Writekey.write(path, authkey);
+
+        SharedPreferences keypref = getApplicationContext().getSharedPreferences(getString(R.string.keyfile), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = keypref.edit();
+        editor.putString("key",authkey);
+        editor.putString("uname",uname);
+        editor.apply();
 
         {
             JSONObject loginForm = new JSONObject();
